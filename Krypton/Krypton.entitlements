@@ -11,11 +11,11 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.co.krypt.kryptonite</string>
+		<string>group.com.matbee.krypton</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)co.krypt.kryptonite</string>
+		<string>$(AppIdentifierPrefix)com.matbee.krypton</string>
 	</array>
 </dict>
 </plist>

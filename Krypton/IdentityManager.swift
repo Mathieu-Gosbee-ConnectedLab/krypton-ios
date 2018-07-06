@@ -15,6 +15,7 @@ class IdentityManager {
 
     enum Storage:String {
         case defaultIdentity = "kr_me_email"
+        case authorName = "kr_me_author_name"
         case immutableTeamIdentity = "kr_team_identity"
         case mutableTeamIdentity = "kr_mut_team_identity"
         
@@ -50,6 +51,36 @@ class IdentityManager {
             try KeychainStorage().delete(key: Storage.defaultIdentity.key)
         } catch {
             log("failed to delete `me` email: \(error)", .error)
+        }
+    }
+    
+    /**
+     Me - create and get the default identity
+     */
+    class func getAuthorName() throws -> String {
+        mutex.lock()
+        defer { mutex.unlock() }
+        return try KeychainStorage().get(key: Storage.authorName.key)
+    }
+    
+    class func setAuthorName(authorName:String) {
+        mutex.lock {
+            do {
+                try KeychainStorage().set(key: Storage.authorName.key, value: authorName)
+            } catch {
+                log("failed to store `me` authorName: \(error)", .error)
+            }
+        }
+    }
+    
+    class func clearAuthorName() {
+        mutex.lock()
+        defer { mutex.unlock() }
+        
+        do {
+            try KeychainStorage().delete(key: Storage.authorName.key)
+        } catch {
+            log("failed to delete `me` authorName: \(error)", .error)
         }
     }
     

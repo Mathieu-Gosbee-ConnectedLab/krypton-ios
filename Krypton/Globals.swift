@@ -11,7 +11,7 @@ import Foundation
 //MARK: Constants
 struct Constants {
     static let arnEndpointKey = "aws_endpoint_arn_key"
-    static let appGroupSecurityID = "group.co.krypt.kryptonite"
+    static let appGroupSecurityID = "group.com.matbee.krypton"
     static let defaultKeyChainService = "kr_keychain_service"
     static let teamKeyChainService = "kr_team_keychain_service"
     static let keychainAccessGroup = Constants.appGroupSecurityID

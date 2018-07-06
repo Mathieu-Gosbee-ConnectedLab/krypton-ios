@@ -11,6 +11,7 @@ import UIKit
 
 class MeController:KRBaseController, UITextFieldDelegate {
     @IBOutlet var tagTextField:UITextField!
+    @IBOutlet weak var fullNameTextField: UITextField!
     
     @IBOutlet var meCommandWindow:UIView!
     @IBOutlet var otherCommandWindow:UIView!
@@ -63,6 +64,7 @@ class MeController:KRBaseController, UITextFieldDelegate {
     @objc func redrawMe() {
         do {
             tagTextField.text = try IdentityManager.getMe()
+            fullNameTextField.text = (try? IdentityManager.getAuthorName()) ?? ""
         } catch (let e) {
             log("error getting keypair: \(e)", LogType.error)
             showWarning(title: "Error", body: "Could not get user data. \(e)")
@@ -151,6 +153,13 @@ class MeController:KRBaseController, UITextFieldDelegate {
         
         
         return true
+    }
+    
+    @IBAction func fullNameTextFieldEditingEnded(_ sender: Any) {
+        guard let fullName = fullNameTextField.text else {
+            return
+        }
+        IdentityManager.setAuthorName(authorName: fullName)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

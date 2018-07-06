@@ -404,6 +404,7 @@ class Silo {
             }
             
             let me = MeResponse(me: MeResponse.Me(email: try IdentityManager.getMe(),
+                                                  fullName: try IdentityManager.getAuthorName(),
                                                   publicKeyWire: try keyManager.keyPair.publicKey.wireFormat(),
                                                   pgpPublicKey: pgpPublicKey,
                                                   teamCheckpoint: teamCheckpoint))

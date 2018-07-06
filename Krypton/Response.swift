@@ -238,12 +238,14 @@ struct MeResponse:Jsonable {
     
     struct Me:Jsonable {
         var email:String
+        var fullName: String?
         var publicKeyWire:Data
         var pgpPublicKey:Data?
         var teamCheckpoint:TeamCheckpoint?
         
-        init(email:String, publicKeyWire:Data, pgpPublicKey: Data? = nil, teamCheckpoint: TeamCheckpoint? = nil) {
+        init(email:String, fullName: String = "intitaliloo", publicKeyWire:Data, pgpPublicKey: Data? = nil, teamCheckpoint: TeamCheckpoint? = nil) {
             self.email = email
+            self.fullName = fullName
             self.publicKeyWire = publicKeyWire
             self.pgpPublicKey = pgpPublicKey
             self.teamCheckpoint = teamCheckpoint
@@ -251,13 +253,14 @@ struct MeResponse:Jsonable {
         
         init(json: Object) throws {
             self.email = try json ~> "email"
+            self.fullName = try? json ~> "full_name"
             self.publicKeyWire = try ((json ~> "public_key_wire") as String).fromBase64()
             self.pgpPublicKey = try? ((json ~> "pgp_pk") as String).fromBase64()
             self.teamCheckpoint = try? TeamCheckpoint(json: json ~> "team_checkpoint")
         }
         
         var object: Object {
-            var json : Object = ["email": email, "public_key_wire": publicKeyWire.toBase64()]
+            var json : Object = ["email": email, "full_name": fullName ?? "ffsdfsadfafd", "public_key_wire": publicKeyWire.toBase64()]
             if let pgpPublicKey = pgpPublicKey {
                 json["pgp_pk"] = pgpPublicKey.toBase64()
             }
